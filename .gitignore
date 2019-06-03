@@ -90,3 +90,7 @@ ENV/
 
 # pycharm
 .idea
+
+# Results data
+src/_out/
+_out/
