@@ -3,11 +3,6 @@
 from PIL import Image, ImageDraw
 
 
-import base64
-import io
-import urllib.request
-
-
 prompt_first = [
     146,399,163,403,170,393,169,391,166,386,170,381,170,371,170,355,169,346,167,335,170,329,170,320,170,
     310,171,301,173,290,178,289,182,287,188,286,190,286,192,291,194,296,195,305,194,307,191,312,190,316,
@@ -38,37 +33,14 @@ prompt_second = [
 ]
 
 
-prompt = "http://www.pythonchallenge.com/pc/return/good.jpg"
-prompt_top = "http://www.pythonchallenge.com/pc/return/"
-
-
-username = "huge"
-password = "file"
-
-
-def open_image():
-    password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-    password_mgr.add_password(None, prompt_top, username, password)
-    handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
-    opener = urllib.request.build_opener(handler)
-
-    raw_data = opener.open(prompt).read()
-
-    buffer = io.BytesIO(raw_data)
-    image = Image.open(buffer)
-
-    return image
-
-
 def trace(draw, points):
     for x in range(0, len(points)-4, 2):
         draw.line(points[x:x+4], fill=128, width=4)
 
 
 def main():
-    print("book")
-
-    image = open_image()
+    dimension = max(prompt_first + prompt_second)
+    image = Image.new("RGB", (dimension, dimension), (0, 0, 0))
     draw = ImageDraw.Draw(image)
 
     trace(draw, prompt_first)
